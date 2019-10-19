@@ -1,0 +1,116 @@
+<html>
+  <head>
+  	<title>Hi</title>
+  	<meta name="csrf-token" content="{{ csrf_token() }}">
+  	<meta charset="UTF-8">
+  	<meta name="description" content="Free Web tutorials">
+ 	<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+	<meta name="author" content="John Doe">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+  	<section>
+  		<div class="container">
+  			<form method="POST" name="form1">
+	  			<div class="row">
+	  				<div class="col-lg-12">
+	  					<label class="label">Name : </label>
+	  					<div class="form-group">
+	  						<input type="text" class="form-control" id="user_name">
+	  					</div>
+		  			</div>
+		  			<div class="col-lg-12">
+	  					<label class="label">Parent Id : </label>
+	  					<div class="form-group">
+	  						<input type="text" class="form-control" id="parent_id">
+	  					</div>
+		  			</div>
+		  			<div class="col-lg-12">
+	  					<label class="label">Salary : </label>
+	  					<div class="form-group">
+	  						<input type="text" class="form-control" id="salary">
+	  					</div>
+		  			</div>
+	  				<div class="col-lg-12">
+	  					<button type="button" class="btn btn-success" id="submit">Submit
+	  					</button> 
+	  				</div>
+	  			</div>
+  			</form>
+  		</div>
+  	</section>
+  </body>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+	    $("#submit").click(function () {
+	        // var id = $('#id').val();
+	        var id = "";
+	        var user_name = $('#user_name').val();
+	        var parent_id = $('#parent_id').val();
+	        var salary = $('#salary').val();
+
+	        console.log("user name",user_name);
+	        console.log("parent id",parent_id);
+	        console.log("salary",salary);
+
+
+	        var data = new FormData();
+	        data.append('user_name', user_name);
+	        data.append('parent_id', parent_id);
+	        data.append('salary', salary);
+	        if (user_name == "") {
+	        	console.log("Please Enter User Name.");
+	            // toastr.warning("Please, Please Enter Your Name  !")
+	        } if (parent_id == "") {
+	        	console.log("Please Enter Parent Id.");
+	            // toastr.warning("Please, Please Enter Your Name  !")
+	        } if (salary == "") {
+	        	console.log("Please Enter Salary.");
+	            // toastr.warning("Please, Please Enter Your Name  !")
+	        } else {
+	            if (id == "") {
+	            	$.post("http://localhost:8000/api/register",
+	            		{user_name: user_name,
+            				parent_id: parent_id,
+            				salary:salary}, function(data){
+			            // console.log(data);
+			            if(data.status === 1)
+			              {
+			                alert("login success");
+			              } else {
+			              	alert("Error");
+			              }
+      				});
+	            } else {
+	                /*$.ajax({
+	                    headers: {
+	                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	                    },
+	                    type: "POST",
+	                    url: "{{ URL::to('students_update') }}/" + id,
+	                    data: data,
+	                    processData: false,
+	                    contentType: false,
+	                    enctype: 'multipart/form-data',
+	                    cache: false,
+	                    success: function (data) {
+	                        closeModal();
+	                        table.ajax.reload(null, false);
+	                        swal("Updated!", "Successfully Updated.!", "success");
+	                    }
+	                });*/
+	            }
+	        }
+	    });
+	});
+	
+</script>
+</html>
